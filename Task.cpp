@@ -23,7 +23,7 @@ class Elevator {
 
 public:
     //Начальные условия (лифт находится на 3м этаже, пассажиров нет)
-    Elevator(int numFloors) : numFloors(numFloors), currentFloor(3), direction(0) {}   
+    Elevator(int numFloors) : numFloors(numFloors), currentFloor(1), direction(0) {}   
 
 
 
@@ -109,17 +109,24 @@ public:
             printStatus();
 
             if (_kbhit()) { // Проверяем, была ли нажата клавиша
+
                 std::string command;
                 std::cout << ">> ";
                 std::cin >> command;
 
-                int enteredFloor = std::stoi(command.substr(1));
-
-                if (enteredFloor < 1 || enteredFloor > numFloors) {
-                    std::cout << "Error. Wrong number of floor." << std::endl;
+                if (command.size() < 2) {
+                    std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use EX to exit from simulation." << std::endl;
                     continue;
                 }
 
+                int enteredFloor = std::stoi(command.substr(1));
+
+                if (std::cin.fail() || enteredFloor < 1 || enteredFloor > numFloors) {
+                    std::cin.clear(); // Сброс ошибки ввода
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера ввода
+                    std::cout << "Invalid entry. Please enter a natural number not greater than the number of floors." << std::endl;
+                    continue;
+                }
                 else if (command[0] == 'F') {
                     int requestedFloor = enteredFloor;
 
@@ -132,15 +139,16 @@ public:
 
                     enterCabin(targetFloor);
                     moveWithSpeed();  // Перемещаем лифт
-
                 }
                 else if (command[0] == 'E') {
                     break;  // завершаем программу
                 }
                 else {
-                    std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use E to exit from simulation." << std::endl;
+                    std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use EX to exit from simulation." << std::endl;
                     continue;
                 }
+
+
             }
             std::this_thread::sleep_for(std::chrono::seconds(1)); // Подождать 1 секунду
 
@@ -153,12 +161,25 @@ public:
 
 int main() {
     int numFloors;  // Вводим число этажей, считая самый нижний этаж первым
+    
+    while (true) {
     std::cout << "Enter the number of floors: ";
     std::cin >> numFloors;
+    
+    if (std::cin.fail() || numFloors <= 0) {
+        std::cin.clear(); // Сброс ошибки ввода
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера ввода
+        std::cout << "Invalid entry. Please enter a natural number." << std::endl;
+        }
+    else {
+        break; // Правильный ввод, выходим из цикла
+        }
+    }
+
 
     Elevator elevator(numFloors);
 
-    std::cout << "Use command F + floor number to call elevator. Use C + floor number to enter the elevator. Use E to exit from simulation." << std::endl;
+    std::cout << "Use command F + floor number to call elevator. Use C + floor number to enter the elevator. Use EX to exit from simulation." << std::endl;
 
     elevator.printStatus();
 
@@ -169,13 +190,19 @@ int main() {
         std::cout << ">> ";
         std::cin >> command;
 
-        int enteredFloor = std::stoi(command.substr(1));
-
-        if (enteredFloor < 1 || enteredFloor > numFloors) {   // Проверка условий 
-            std::cout << "Error. Wrong number of floor." << std::endl;
+        if (command.size() < 2) {
+            std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use EX to exit from simulation." << std::endl;
             continue;
         }
 
+        int enteredFloor = std::stoi(command.substr(1));
+
+        if (std::cin.fail() || enteredFloor < 3 || enteredFloor > numFloors) {
+            std::cin.clear(); // Сброс ошибки ввода
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Очистка буфера ввода
+            std::cout << "Invalid entry. Please enter a natural number not greater than the number of floors." << std::endl;
+            continue;
+        }
         else if (command[0] == 'F') {
             int requestedFloor = enteredFloor;
 
@@ -188,13 +215,12 @@ int main() {
 
             elevator.enterCabin(targetFloor);
             elevator.moveWithSpeed();  // Перемещаем лифт
-
         }
         else if (command[0] == 'E') {
             break;  // завершаем программу
         }
         else {
-            std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use E to exit from simulation." << std::endl;
+            std::cout << "Error. Undefiend command. \nUse command F + floor number to call elevator. Use C + floor number to enter the elevator. Use EX to exit from simulation." << std::endl;
             continue;
         }
 

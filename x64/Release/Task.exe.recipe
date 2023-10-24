@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Games\CppProjects\Task\x64\Release\Task.exe</FullPath>
+      <FullPath>C:\Games\CppProjects\Task\TestTask\x64\Release\Task.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

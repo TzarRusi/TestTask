@@ -1,1 +1,2 @@
 C:\Games\CppProjects\Task\x64\Release\Task.exe
+C:\Games\CppProjects\Task\TestTask\x64\Release\Task.exe
