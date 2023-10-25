@@ -1,0 +1,7 @@
+﻿  Task.cpp
+C:\Games\CppProjects\Task\Task.cpp(110,39): error C2039: "stoi": не является членом "std".
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\thread(32,1): message : см. объявление "std"
+C:\Games\CppProjects\Task\Task.cpp(110,43): error C3861: stoi: идентификатор не найден
+C:\Games\CppProjects\Task\Task.cpp(117,36): error C2039: "stoi": не является членом "std".
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532\include\thread(32,1): message : см. объявление "std"
+C:\Games\CppProjects\Task\Task.cpp(117,40): error C3861: stoi: идентификатор не найден
